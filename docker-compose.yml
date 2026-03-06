@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  clowdbot-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clowdbot-agent
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    env_file:
+      - .env
+    volumes:
+      - agent-data:/app/data
+    environment:
+      - SQLITE_PATH=/app/data/agent.db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  agent-data:
+    driver: local
