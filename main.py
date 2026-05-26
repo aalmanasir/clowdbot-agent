@@ -11,6 +11,7 @@ from app.logging_config import logger
 from app.db import init_db
 from app.discord_bot import start_discord
 from app.routes import router
+from app.remote_mcp import router as remote_mcp_router
 from app.monitoring import monitor, monitoring_loop
 
 
@@ -75,6 +76,7 @@ app.add_middleware(
 
 # Mount all routes
 app.include_router(router)
+app.include_router(remote_mcp_router)
 
 
 # Monitoring endpoint (separate from router for direct access)

@@ -24,6 +24,17 @@ class Settings:
     # GitHub
     GITHUB_TOKEN: str = os.getenv("GITHUB_TOKEN", "")
     GITHUB_WEBHOOK_SECRET: str = os.getenv("GITHUB_WEBHOOK_SECRET", "")
+    GITHUB_REPOSITORY: str = os.getenv("GITHUB_REPOSITORY", "")
+
+    # Telegram
+    TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
+    TELEGRAM_CHAT_ID: str = os.getenv("TELEGRAM_CHAT_ID", "")
+    TELEGRAM_POLL_INTERVAL: int = int(os.getenv("TELEGRAM_POLL_INTERVAL", "3"))
+
+    # Google Cloud
+    GOOGLE_CLOUD_PROJECT: str = os.getenv("GOOGLE_CLOUD_PROJECT", "")
+    GOOGLE_APPLICATION_CREDENTIALS: str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
+    GOOGLE_MAPS_API_KEY: str = os.getenv("GOOGLE_MAPS_API_KEY", "")
 
     # Operating mode: monitor | assist | execute | incident
     BOT_MODE: str = os.getenv("BOT_MODE", "assist").lower()
@@ -59,6 +70,12 @@ class Settings:
             "discord_channel": cls.DISCORD_CHANNEL_ID,
             "github_token": _mask(cls.GITHUB_TOKEN),
             "github_webhook_secret": "set" if cls.GITHUB_WEBHOOK_SECRET else "(not set)",
+            "github_repository": cls.GITHUB_REPOSITORY or "(not set)",
+            "telegram_token": _mask(cls.TELEGRAM_BOT_TOKEN),
+            "telegram_chat_id": cls.TELEGRAM_CHAT_ID or "(not set)",
+            "google_cloud_project": cls.GOOGLE_CLOUD_PROJECT or "(not set)",
+            "google_credentials": "set" if cls.GOOGLE_APPLICATION_CREDENTIALS else "(not set)",
+            "google_maps_api_key": _mask(cls.GOOGLE_MAPS_API_KEY),
             "sqlite_path": cls.SQLITE_PATH,
             "allowed_execute": cls.ALLOWED_EXECUTE,
         }
